@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://bxpb7m5kv8nkg"]
+
+[ext_resource type="Texture2D" uid="uid://b8g0dffcyqscg" path="res://textures/wood.jpg" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cr8l7qgbwvs7s" path="res://character.gd" id="2_0xm2m"]
+[ext_resource type="ArrayMesh" uid="uid://qsbggejrvwib" path="res://objs/suzanne.obj" id="3_h2yge"]
+[ext_resource type="ArrayMesh" uid="uid://bk4a7jc8fgvxl" path="res://objs/star.obj" id="4_1bvp3"]
+[ext_resource type="ArrayMesh" uid="uid://dp8wra48k4te3" path="res://objs/burger.obj" id="5_lquwl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+sky_top_color = Color(0.5163461, 0.58954096, 0.6872718, 1)
+sky_horizon_color = Color(0.70378256, 0.717394, 0.7365515, 1)
+ground_bottom_color = Color(0.09611703, 0.0773677, 0.056266993, 1)
+ground_horizon_color = Color(0.70378256, 0.717394, 0.7365515, 1)
+
+[sub_resource type="Sky" id="Sky_0xm2m"]
+sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
+
+[sub_resource type="Environment" id="Environment_h2yge"]
+background_mode = 2
+sky = SubResource("Sky_0xm2m")
+glow_enabled = true
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_g4v7s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
+albedo_texture = ExtResource("1_ig7tw")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_g4v7s"]
+size = Vector2(50, 50)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yf5fn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_57qmd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
+albedo_color = Color(0.2700275, 0.7148141, 0.59340125, 1)
+metallic = 1.0
+metallic_specular = 0.83
+roughness = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jli5k"]
+albedo_color = Color(1, 1, 0, 1)
+metallic = 1.0
+roughness = 0.0
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+emission_energy_multiplier = 1.71
+
+[node name="SceneRoot" type="Node3D" unique_id=1492848226]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1520572369]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=570302776]
+environment = SubResource("Environment_h2yge")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=836249548]
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=476815615]
+shape = SubResource("WorldBoundaryShape3D_g4v7s")
+debug_color = Color(0, 0.6290001, 0.74, 0.75686276)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=1015680631]
+material_override = SubResource("StandardMaterial3D_0xm2m")
+mesh = SubResource("PlaneMesh_g4v7s")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1402572243]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2_0xm2m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=2018659476]
+visible = false
+mesh = SubResource("CapsuleMesh_yf5fn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1501242337]
+shape = SubResource("CapsuleShape3D_57qmd")
+
+[node name="Node3D" type="Node3D" parent="CharacterBody3D" unique_id=892456598]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.77096367, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Node3D" unique_id=2071486614]
+
+[node name="Suzanne" type="MeshInstance3D" parent="." unique_id=1711357453]
+transform = Transform3D(2.0899878, -0.0055966303, 0.0013737015, 0.006988778, 1.6739899, -0.002056423, -0.0013661642, 0.0016499867, 2.0909986, 9.897, 1.6591399, -1.876)
+material_override = SubResource("StandardMaterial3D_h2yge")
+mesh = ExtResource("3_h2yge")
+
+[node name="Star" type="MeshInstance3D" parent="." unique_id=392996551]
+transform = Transform3D(0.8478973, -1.3596382, 1.7675639, 2.030247, 1.2597555, 0, -0.9359747, 1.5008743, 1.6012317, 11.366069, 4.51497, -13.222868)
+material_override = SubResource("StandardMaterial3D_jli5k")
+mesh = ExtResource("4_1bvp3")
+
+[node name="Burger" type="MeshInstance3D" parent="." unique_id=1596246401]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -11.503965, -0.019800007, -6.8197193)
+mesh = ExtResource("5_lquwl")
