@@ -12,8 +12,8 @@ var input_direction : Vector2
 @export var air_control = 5.0
 @export var air_resistance = 2.0
 
-@onready var head = $Node3D
-@onready var camera = $Node3D/Camera3D
+@onready var head = $Pivot
+@onready var camera = $Pivot/Camera3D
 
 func _ready(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
