@@ -7,6 +7,13 @@
 [ext_resource type="ArrayMesh" uid="uid://dp8wra48k4te3" path="res://objs/burger.obj" id="5_lquwl"]
 [ext_resource type="Shader" uid="uid://cme3f32f0xwka" path="res://scripts_and_shaders/main.gdshader" id="6_7mycd"]
 
+[sub_resource type="Gradient" id="Gradient_7mycd"]
+offsets = PackedFloat32Array(0, 0.5881226, 1)
+colors = PackedColorArray(0.24834618, 0.022324324, 0, 1, 0.38856977, 0.6268447, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7mycd"]
+gradient = SubResource("Gradient_7mycd")
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
 sky_top_color = Color(0.5163461, 0.58954096, 0.6872718, 1)
 sky_horizon_color = Color(0.70378256, 0.717394, 0.7365515, 1)
@@ -19,7 +26,12 @@ sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
 [sub_resource type="Environment" id="Environment_h2yge"]
 background_mode = 2
 sky = SubResource("Sky_0xm2m")
+tonemap_mode = 3
+tonemap_exposure = 0.65
+tonemap_white = 1.68
 glow_enabled = true
+adjustment_enabled = true
+adjustment_color_correction = SubResource("GradientTexture1D_7mycd")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_g4v7s"]
 
@@ -36,8 +48,12 @@ size = Vector2(50, 50)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d0u6y"]
 render_priority = 10
 shader = ExtResource("6_7mycd")
-shader_parameter/depth_range = 10.0
-shader_parameter/depth_strength = 1.0
+shader_parameter/TEST_TEXTURE = ExtResource("1_ig7tw")
+shader_parameter/box_blur = Basis(0.333, 0.333, 0.333, 0.333, 0.333, 0.333, 0.333, 0.333, 0.333)
+shader_parameter/sobel_x = Basis(-1, 0, 1, -2, 0, 2, -1, 0, 1)
+shader_parameter/sobel_y = Basis(-1, -2, -1, 0, 0, 0, 1, 2, 1)
+shader_parameter/gaussian = Basis(0.0625, 0.125, 0.0625, 0.125, 0.25, 0.125, 0.0625, 0.125, 0.0625)
+shader_parameter/laplacian = Basis(0, -1, 0, -1, 4, -1, 0, -1, 0)
 
 [sub_resource type="QuadMesh" id="QuadMesh_yf5fn"]
 flip_faces = true
